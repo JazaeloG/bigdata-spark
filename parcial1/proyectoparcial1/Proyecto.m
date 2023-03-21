@@ -1,71 +1,72 @@
+clear, clc
 %Definir patrones de entrada que representan las señales de peligro
 
 %Señal x
-X=[0100010;
-0010100;
-0001000;
-0010100;
-0100010;
-0000000]
+X=[0 1 0 0 0 1 0;
+   0 0 1 0 1 0 0;
+   0 0 0 1 0 0 0;
+   0 0 1 0 1 0 0;
+   0 1 0 0 0 1 0;
+   0 0 0 0 0 0 0];
 
 %Señal Admiracion
-i=[0001000;
-0001000;
-0001000,
-0001000;
-0000000;
-0001000]
+i=[0 0 0 1 0 0 0;
+   0 0 0 1 0 0 0;
+   0 0 0 1 0 0 0;
+   0 0 0 1 0 0 0;
+   0 0 0 0 0 0 0;
+   0 0 0 1 0 0 0];
 
 %SeñalRayo
-rayo=[0000010;
-0000100;
-0001000;
-0011100;
-0001000;
-0010000]
+rayo=[0 0 0 0 0 1 0;
+      0 0 0 0 1 0 0;
+      0 0 0 1 0 0 0;
+      0 0 1 1 1 0 0;
+      0 0 0 1 0 0 0;
+      0 0 1 0 0 0 0];
 
 %Señal de viento
-viento=[0101010;
-0010101;
-0101010;
-0010101;
-0101010;
-1111111]
+viento=[0 1 0 1 0 1 0;
+        0 0 1 0 1 0 1;
+        0 1 0 1 0 1 0;
+        0 0 1 0 1 0 1;
+        0 1 0 1 0 1 0;
+        1 1 1 1 1 1 1];
 
 %Señal C invertida
-c=[0001000;
-0010100;
-0100010;
-1000001;
-1000001;
-1000001]
+c=[0 0 0 1 0 0 0;
+0 0 1 0 1 0 0;
+0 1 0 0 0 1 0;
+1 0 0 0 0 0 1;
+1 0 0 0 0 0 1;
+1 0 0 0 0 0 1];
 
-rayomul = rayo(:) * rayo(:)';
-cmul = C(:) * C(:)';
-w2 = w1 + cmul + cmul;
+w0 = rayo(:) * rayo(:)';
+c2 = c(:) * c(:)';
+w2 = w0 + c2 + c2;
 
 u0 = c;
 ulast = c;
 d=1;
 
 while (1)
-  u0 = u0 * w2;
+u0 = u0 * w2;
 
-  for i=1:1:35
-    if u0(i) > 0
-      u0(i) = 1;
-    else
-      u0(i) = -1;
-    endif
-  endfor
+for i=1:1:35
+if u0(i) > 0
+u0(i) = 1;
+else
+u0(i) = -1;
+endif
+endfor
 
-  if (u0 == ulast)
-      fprintf('Encontrado %d \n', c);
-      u0
-      ulast
-      break;
-  endif
+if (u0 == ulast)
+fprintf('Encontrado patrón %d \n', d);
+u0
+ulast
+break;
+endif
 
-  c = c + 1;
-  ulast = u0;
+d = d + 1;
+ulast = u0;
 end
