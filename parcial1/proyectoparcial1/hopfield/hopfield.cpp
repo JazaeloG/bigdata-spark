@@ -16,13 +16,13 @@ void printw(int **W, int N)
   }
 }
 
-void weigths(int **W, int *x0, int *x1, int *x2, int *x3, int N)
+void weigths(int **W, int *x0, int *x1, int *x2, int *x3,int *x4, int N)
 {
 
   for (int i=0; i<N; i++)
   for (int j=0; j<N; j++)
   {
-    W[i][j] = x0[i]*x0[j] + x1[i]*x1[j] + x2[i]*x2[j] + x3[i]*x3[j];
+    W[i][j] = x0[i]*x0[j] + x1[i]*x1[j] + x2[i]*x2[j] + x3[i]*x3[j] + x4[i]*x4[j];
   }
   for (int k=0; k<N; k++)
     W[k][k]=0;
@@ -77,16 +77,18 @@ int check(int *v1, int *v2, int N)
 int readfile(string file, int *v1, int col, int N)
 {
     std::ifstream infile(file);
-    int a1, a2, a3, a4, a5;
+    int a1, a2, a3, a4, a5, a6, a7;
     int row=0;
    
-    while(infile >> a1 >> a2 >> a3 >> a4 >> a5 ) {
-        std::cout << a1 << a2 << a3 << a4 << a5 << endl;
+    while(infile >> a1 >> a2 >> a3 >> a4 >> a5 >> a6 >> a7 ) {
+        std::cout << a1 << a2 << a3 << a4 << a5 << a6 << a7 << endl;
         v1[(row*col) + 0] = a1;
         v1[(row*col) + 1] = a2;
         v1[(row*col) + 2] = a3;
         v1[(row*col) + 3] = a4;
         v1[(row*col) + 4] = a5;
+        v1[(row*col) + 0] = a6;
+        v1[(row*col) + 0] = a7;
         row++;
    }
 
@@ -105,12 +107,13 @@ int readfile(string file, int *v1, int col, int N)
 
 int main(void)
 {
-  int N = 40;
-  int col = 5;
+  int N = 42;
+  int col = 7;
   int *x0 = new int[N];
   int *x1 = new int[N];
   int *x2 = new int[N];
   int *x3 = new int[N];
+  int *x4 = new int[N];
 
   cout << "iterations " << endl;
 
@@ -118,6 +121,7 @@ int main(void)
   readfile("2.txt", x1,  col, N);
   readfile("3.txt", x2,  col, N);
   readfile("4.txt", x3,  col, N);
+  readfile("5.txt", x4,  col, N);
 
   // pattern 0
 /*  x0[0] = 1;
@@ -143,12 +147,13 @@ int main(void)
     for (int j=0; j<N; j++)
       W[i][j]=0;
 
-  weigths(W, x0, x1, x2, x3, N);
+  weigths(W, x0, x1, x2, x3, x4, N);
   printw(W, N);
 
   int *s = new int[N]; // allocation memory for s
 
   readfile("x1.txt", s,  col, N);
+//imprime la variable s
 
   // start configuration
 /*  s[0] = -1;
