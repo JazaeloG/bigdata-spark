@@ -87,8 +87,8 @@ int readfile(string file, int *v1, int col, int N)
         v1[(row*col) + 2] = a3;
         v1[(row*col) + 3] = a4;
         v1[(row*col) + 4] = a5;
-        v1[(row*col) + 0] = a6;
-        v1[(row*col) + 0] = a7;
+        v1[(row*col) + 5] = a6;
+        v1[(row*col) + 6] = a7;
         row++;
    }
 
@@ -153,7 +153,6 @@ int main(void)
   int *s = new int[N]; // allocation memory for s
 
   readfile("x1.txt", s,  col, N);
-//imprime la variable s
 
   // start configuration
 /*  s[0] = -1;
